@@ -1,20 +1,20 @@
 class Solution {
     public boolean isHappy(int n) {
-        Set<Integer> seen = new HashSet<>();
-
-        while(n != 1 && !seen.contains(n)){
-            seen.add(n);
-            n = getSquareSum(n);
-        }
-        return n == 1;
+      int slow = n, fast = sumDigits(n);
+      while(fast != 1 && slow != fast) {
+        slow = sumDigits(slow);
+        fast = sumDigits(sumDigits(fast));
+      }
+      return fast == 1;
     }
-    private  int getSquareSum(int num) {
-        int sum = 0;
-        while(num > 0){
-            int digit = num % 10;
-            sum += digit * digit;
-            num /= 10;
+
+    private int sumDigits(int n){
+        int totalSum = 0;
+        while (n != 0) {
+            int digit = n % 10;
+            n /= 10;
+            totalSum += digit * digit;
         }
-        return sum ;
+        return totalSum;
     }
 }
